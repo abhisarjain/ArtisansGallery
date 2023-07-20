@@ -4,6 +4,7 @@ import { HiMenu } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import { MdShoppingCart } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
+
 import {
   isArtisan,
   isLoggedIn,
@@ -101,9 +102,10 @@ const TopNav = () => {
                 </div>
               </div>
               {!is_artisan() && (
-                <div className="cart">
-                  <MdShoppingCart size={30} />
-                </div>
+                <Link to={'/cart'} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div className="cart-icon">
+                  <MdShoppingCart size={30} />  <span className="cart-item-count">10+</span>
+                </div></Link>
               )}
             </>
           ) : (

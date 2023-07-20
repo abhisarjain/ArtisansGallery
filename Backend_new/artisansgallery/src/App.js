@@ -18,6 +18,7 @@ import {
 import Products from "./pages/products/Products";
 import ProductPage from "./pages/products/components/ProductPage";
 import DarkModeToggle from "./pages/shared/DarkModeToggle";
+import Cart from "./pages/cart/Cart";
 
 function App() {
   useEffect(() => {
@@ -58,6 +59,7 @@ function App() {
         <Route element={<Authentication />} path="/authentication" />
         <Route element={<Products/>} path="/products" />
         <Route element = {<ProductPage/>} path="/products/product"  />
+        <Route element = {<Cart/>} path="/cart" /> 
         
       </Routes>
     </>

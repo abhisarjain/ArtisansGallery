@@ -186,7 +186,9 @@ class CartView(APIView):
         if not request.user.is_artisan:
             cart = Cart.objects.filter(customer = request.user.id)
             serializer = CartSerializers(cart,many=True)
-            return Response({'mycart': {'myproducts' : serializer.data,'total_price': Cart.calculate_total_price(request.user.id)}})
+            total_price, item_count = Cart.calculate_total_price(request.user.id)
+            response_data = {'mycart': {'myproducts': serializer.data,'total_price': total_price,'item_count': item_count,}}
+            return Response(response_data)
         else:
             return Response({'errors' : "You are not a customer"},status=status.HTTP_400_BAD_REQUEST)
         

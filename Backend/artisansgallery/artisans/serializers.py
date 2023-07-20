@@ -106,7 +106,7 @@ class AllProductsSerializers(serializers.ModelSerializer):
    artisan_name = serializers.CharField(source='artisan.user', read_only=True)
    class Meta:
       model = Product
-      fields = ['name', 'description','price','artisan_name','product_image','id','stock']
+      fields = ['name', 'description','price','artisan_name','product_image','id','stock','discounted_price']
 
 class AddProductSerializers(serializers.ModelSerializer):
     class Meta:
@@ -117,9 +117,13 @@ class AddProductSerializers(serializers.ModelSerializer):
         super().__init__(instance=instance, data=data, **kwargs)
 
 class CartSerializers(serializers.ModelSerializer):
+    product_name = serializers.CharField(source='product.name',read_only=True)
+    product_price = serializers.DecimalField(source='product.price',read_only=True,max_digits=10, decimal_places=2)
+    product_discounted_price = serializers.DecimalField(source='product.discounted_price',read_only=True,max_digits=10, decimal_places=2)
+    product_image = serializers.ImageField(source='product.product_image',read_only= True)
     class Meta:
         model = Cart
-        fields = ['customer','product','quantity','price']
+        fields = ['customer','product','quantity','product_name','product_price','product_discounted_price','product_image']
 
 class BuyNowSerializers(serializers.ModelSerializer):
     class Meta:

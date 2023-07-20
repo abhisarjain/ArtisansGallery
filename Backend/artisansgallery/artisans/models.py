@@ -46,6 +46,7 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    discounted_price = models.DecimalField(max_digits=10, decimal_places=2,default=0)
     stock = models.PositiveIntegerField()
     artisan = models.ForeignKey(Artisans, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -74,19 +75,23 @@ class Cart(models.Model):
     def calculate_total_price(customer):
         cart_items = Cart.objects.filter(customer=customer)
         total_price = sum(item.price * item.quantity for item in cart_items)
-        return total_price
+        item_count = cart_items.count()
+        return total_price, item_count
     
     def save(self, *args, **kwargs):
         if not self.pk:  # Only update the price if the instance is being created, not updated
             self.price = self.product.price
         super().save(*args, **kwargs)
 
-
+    def __str__(self):
+        return (self.customer.user.username + "'s cart item")
 
 class OrderHistory(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product,on_delete=CASCADE)
     quantity = models.PositiveIntegerField()
+    def __str__(self):
+        return (self.customer.user.username + "'s product")
 
 
 class Order(models.Model):
