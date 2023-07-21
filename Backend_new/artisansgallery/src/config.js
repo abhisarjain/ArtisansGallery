@@ -1,3 +1,3 @@
-const backendUrl = 'http://abhisarjain.pythonanywhere.com';
+const backendUrl = 'https://abhisarjain.pythonanywhere.com';
 
 export default backendUrl;
