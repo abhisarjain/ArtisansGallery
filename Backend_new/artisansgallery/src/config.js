@@ -1,3 +1,3 @@
-const backendUrl = 'http://192.168.0.209:8000';
+const backendUrl = 'http://abhisarjain.pythonanywhere.com';
 
 export default backendUrl;
